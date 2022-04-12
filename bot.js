@@ -11,8 +11,8 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (msg)=>{
-	if(msg.channel.id=="963263187468308530" && msg.content==='hola bot'){
-		msg.reply('hola humano')
+	if(msg.channel.id=="963263187468308530" && msg.content.includes('flaca')){
+		msg.reply('te digo en 2 sencillos pasos en como hacer que te quiera, paso 1 cuando vayan a verse le miras a los ojos y le dices ya esta aqui tu macho que te sacara de este cerro, paso 2 le das 50 soles a mas y listo problema solucionado')
 	}
 });
 
