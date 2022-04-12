@@ -12,6 +12,7 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (msg)=>{
+	if(msg.author.bot){return}
 	if(msg.channel.id=="963263187468308530" || msg.channel.id=="955847068331679765" ){
 		for(const pasta in pastas){
 			if (msg.content.includes(pastas[pasta].text)){
