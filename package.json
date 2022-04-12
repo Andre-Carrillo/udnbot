@@ -2,10 +2,21 @@
   "name": "udnbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andre-Carrillo/udnbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Andre-Carrillo/udnbot/issues"
+  },
+  "homepage": "https://github.com/Andre-Carrillo/udnbot#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
 }
