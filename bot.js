@@ -1,6 +1,8 @@
 const {Client, Intents} = require('discord.js');
-const { token } = require('./config.json');
+//const { token } = require('./config.json');
 const { pastas } = require('./pastas.json');
+require('dotenv').config();
+const tokenenv = process.env.TOKEN;
 
 //haciendo el cliente
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
@@ -22,5 +24,5 @@ client.on('messageCreate', (msg)=>{
 	}
 });
 
-client.login(token);
+client.login(tokenenv);
 
