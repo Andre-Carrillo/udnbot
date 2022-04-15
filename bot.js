@@ -1,6 +1,6 @@
 const {Client, Intents} = require('discord.js');
 //const { token } = require('./config.json');
-//const { pastas } = require('./pastas.json');
+const { pastas, v_r } = require('./pastas.json');
 require('dotenv').config();
 const tokenenv = process.env.TOKEN;
 const {Matrix3} = require('./gauss.js');
@@ -16,8 +16,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', (msg)=>{
 	if(msg.author.bot){return}
-	if(msg.channel.id=="963263187468308530" || msg.channel.id=="955847068331679765" ){
-		const {pastas} = require('./pastas.json')
+	if(msg.channel.id=="963263187468308530" || msg.channel.id=="955847068331679765" || msg.channel.id=="956909801433096222"){
 		find: {
 		for(const pasta in pastas){
 			if (msg.content.includes(pastas[pasta].text)){
@@ -29,6 +28,37 @@ client.on('messageCreate', (msg)=>{
 				let elements = msg.content.slice(8).split(" ");
 				let mat = new Matrix3(elements);
 				msg.reply(solveMatrix(mat));
+			}else if(msg.content.startsWith("!verdad_reto")){
+				if(Math.random()<0.5){
+					msg.reply(v_r.verdad[Math.floor(Math.random()*v_r.verdad.length)])		
+				}else{
+					msg.reply(v_r.reto[Math.floor(Math.random()*v_r.reto.length)])
+				}
+			}else if(msg.content.startsWith("!gay")){
+				let nombre = msg.content.slice(4)
+				msg.reply(`${nombre} es ${Math.round(Math.random()*100)}% gay`)
+			}else if(msg.content.startsWith("!recta")){
+				console.log("recta command activated...");
+				let numbers, response;
+				console.log(msg.content.slice(7))
+				switch (msg.content.slice(7, 9)){
+					case "pp":
+						numbers = msg.content.slice(9).trim().split(" ");
+						console.log(numbers)
+						response=`Resolución para hallar la ecuación de la recta con los puntos (${numbers[0]}, ${numbers[1]}), (${numbers[2]}, ${numbers[3]}).\n`;
+						let median = (numbers[1]-numbers[3])/(numbers[0]-numbers[2]);
+						response+=`Ahora hallaremos la pendiente de la recta que pasa por estos dos puntos. Esto se hace con la ecuación m=(X1-X2)/(Y1-Y2) --> m=${median}.\n`;
+						response+=`Lo siguiente es hallar la ecuación de la recta mediante la siguiente ecuación: Y-Y1 = m(X-X1). Reemplazando tenemos Y-${numbers[1]} = ${median}(X-${numbers[0]}).\nResolviendo esto tenemos que la ecuación de la recta es: Y = ${median}(X) + (${-median*numbers[0] + +numbers[1]}).\n`;
+						msg.reply(response);
+						break;
+					case "mp":
+						numbers = msg.content.slice(9).trim().split(" ");
+						console.log(numbers);
+						response = `Resolución para hallar la ecuación de la recta con pendiente ${numbers[0]} y que pasa por el punto (${numbers[1]}, ${numbers[2]}).\n`
+						response+= `Se usa la ecuación Y-Y1 = m(X-X1).\nReemplazando: Y-${numbers[2]}=${numbers[0]}(X-${numbers[1]}).\nDespejando Y sale la ecuación Y = ${numbers[0]}X + (${-1*numbers[0]*numbers[1] + +numbers[2]}).\n`;
+						msg.reply(response);
+						break;
+				}
 			}
 		}
 		
