@@ -25,7 +25,7 @@ client.on('messageCreate', (msg)=>{
 				break find;
 			}
 		}
-			if (msg.content.includes("!matriz")){
+			if (msg.content.startsWith("!matriz")){
 				let elements = msg.content.slice(8).split(" ");
 				let mat = new Matrix3(elements);
 				msg.reply(solveMatrix(mat));
