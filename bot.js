@@ -4,6 +4,7 @@ const { pastas, v_r } = require('./pastas.json');
 require('dotenv').config();
 const tokenenv = process.env.TOKEN;
 const {Matrix3} = require('./gauss.js');
+const {Parabola} = require('./parabolas.js')
 
 //haciendo el cliente
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
@@ -46,19 +47,21 @@ client.on('messageCreate', (msg)=>{
 						numbers = msg.content.slice(9).trim().split(" ");
 						console.log(numbers)
 						response=`Resolución para hallar la ecuación de la recta con los puntos (${numbers[0]}, ${numbers[1]}), (${numbers[2]}, ${numbers[3]}).\n`;
-						let median = (numbers[1]-numbers[3])/(numbers[0]-numbers[2]);
+						let median = (+numbers[1] - +numbers[3])/(+numbers[0] - +numbers[2]);
 						response+=`Ahora hallaremos la pendiente de la recta que pasa por estos dos puntos. Esto se hace con la ecuación m=(X1-X2)/(Y1-Y2) --> m=${median}.\n`;
-						response+=`Lo siguiente es hallar la ecuación de la recta mediante la siguiente ecuación: Y-Y1 = m(X-X1). Reemplazando tenemos Y-${numbers[1]} = ${median}(X-${numbers[0]}).\nResolviendo esto tenemos que la ecuación de la recta es: Y = ${median}(X) + (${-median*numbers[0] + +numbers[1]}).\n`;
+						response+=`Lo siguiente es hallar la ecuación de la recta mediante la siguiente ecuación: Y-Y1 = m(X-X1). Reemplazando tenemos Y-${numbers[1]} = ${median}(X-(${numbers[0]})).\nResolviendo esto tenemos que la ecuación de la recta es: Y = ${median}(X) + (${-median*numbers[0] + +numbers[1]}).\n`;
 						msg.reply(response);
 						break;
 					case "mp":
 						numbers = msg.content.slice(9).trim().split(" ");
 						console.log(numbers);
 						response = `Resolución para hallar la ecuación de la recta con pendiente ${numbers[0]} y que pasa por el punto (${numbers[1]}, ${numbers[2]}).\n`
-						response+= `Se usa la ecuación Y-Y1 = m(X-X1).\nReemplazando: Y-${numbers[2]}=${numbers[0]}(X-${numbers[1]}).\nDespejando Y sale la ecuación Y = ${numbers[0]}X + (${-1*numbers[0]*numbers[1] + +numbers[2]}).\n`;
+						response+= `Se usa la ecuación Y-Y1 = m(X-X1).\nReemplazando: Y-${numbers[2]}=${numbers[0]}(X-(${numbers[1]})).\nDespejando Y sale la ecuación Y = ${numbers[0]}X + (${-1*numbers[0]*numbers[1] + +numbers[2]}).\n`;
 						msg.reply(response);
 						break;
 				}
+			}else if(msg.content.startsWith('!parabola')){
+				msg.reply(solvePar(msg.content.slice(9).trim()))
 			}
 		}
 		
@@ -66,6 +69,17 @@ client.on('messageCreate', (msg)=>{
 });
 
 client.login(tokenenv);
+
+function solvePar(string){
+	let par = new Parabola(string)
+	let response = "Información sobre la parábola determinada por: "+string+'\n';
+	response+= `Despejando para y sale: (${par.info.a})x^2 +(${par.info.b})x+(${par.info.c})=y.\n`;
+	response+=`La fórmula para el parámetro es 1/4a. Aplicando esta fórmula, el parámetro sale: ${par.info.p}.\n`;
+	response+=`El vértice de una parábola (h, k) estará en el punto (-b/2a, f(-b/2a)). -b/2a = h = ${par.info.h}.\n`;
+	response+=`Entonces evaluando este elemento en la formula de la parábola, obtenemos k=${par.info.k}.\n`;
+	response+=`El vértice de la parábola está en (${par.info.h}, ${par.info.k}).\n`;
+	return response;
+}
 
 function stringMat(matr){
 	let a = matr.array

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Andre-Carrillo/udnbot#readme",
   "dependencies": {
+    "algebra.js": "^0.2.6",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0"
   }
