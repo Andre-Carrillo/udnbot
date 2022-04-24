@@ -61,7 +61,13 @@ client.on('messageCreate', (msg)=>{
 						break;
 				}
 			}else if(msg.content.startsWith('!parabola')){
-				msg.reply(solvePar(msg.content.slice(9).trim()))
+				if (msg.content.slice(10, 12)=="fd"){
+					//recieves string h k d===F(h, k), y=directriz
+					msg.reply(solveParFD(msg.content.slice(12).trim().split(" ").map((l)=>parseInt(l))));
+					
+				}else{
+					msg.reply(solvePar(msg.content.slice(9).trim()));
+				}
 			}
 		}
 		
@@ -69,6 +75,13 @@ client.on('messageCreate', (msg)=>{
 });
 
 client.login(tokenenv);
+
+function solveParFD(list){
+	console.log(`2y((${list[1]})-(${list[2]}))=(x-(${list[0]}))^2+(${list[1]})^2-(${list[2]})^2`)
+	let par = new Parabola(`2y((${list[1]})-(${list[2]}))=(x-(${list[0]}))^2+(${list[1]})^2-(${list[2]})^2`)
+	console.log(par.eq.toString())
+	return `a=${par.info.a}|b=${par.info.b}|c=${par.info.c}|p=${par.info.p}|h=${par.info.h}|k=${par.info.k}`
+}
 
 function solvePar(string){
 	let par = new Parabola(string)

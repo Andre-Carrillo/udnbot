@@ -10,7 +10,9 @@ function toFraction(exp){
 class Parabola{
 	constructor(str){
 		this.eq = algebra.parse(str);
+		console.log(this.eq.toString())
 		this.ansfy = this.eq.solveFor('y');
+		console.log(this.ansfy)
 		this.c = this.ansfy.eval({x:0});
 		let aplusb = this.ansfy.eval({x:1}).subtract(this.c);
 		let a2plusb = this.ansfy.eval({x:2}).subtract(this.c).divide(2);
@@ -19,7 +21,6 @@ class Parabola{
 		let av = toFraction(this.a);
 		let bv = toFraction(this.b);
 		let cv = toFraction(this.c);
-		console.log(av, bv, cv);
 		let p_ = 1/(4*av)
 		let h_ = bv/(-2*av);
 		let k_ = cv - h_*h_/(4*p_) 
